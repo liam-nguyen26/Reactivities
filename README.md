@@ -7,7 +7,7 @@ This repository contains the source of my site project.
 3. Real time web communication
 
 ## Contact me via:
-2. [Facebook](https://www.facebook.com/nl.liamnguyen)
-3. [Email](nhatlinh.nguyenlam26@gmail.com)
+1. [Facebook](https://www.facebook.com/nl.liamnguyen)
+2. [Email](nhatlinh.nguyenlam26@gmail.com)
 
 #### © 2021 by Linh-Nguyen26
