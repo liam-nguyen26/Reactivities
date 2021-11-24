@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +6,7 @@ using API.Extensions;
 using Application.Activities;
 using Application.Core;
 using AutoMapper;
+using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,7 +33,12 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(config =>
+            {
+                //chi ra handler nam o dau de lay quang vo controller validate
+                //khai bao 1 lan roi dung cho tat ca handler khac trong application
+                config.RegisterValidatorsFromAssemblyContaining<Create>();
+            });
             services.AddApplicationServices(_config);
         }
 
