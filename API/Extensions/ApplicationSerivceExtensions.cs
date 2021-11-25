@@ -18,20 +18,20 @@ namespace API.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
-            });
+            }); //for swagger
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
-            });
+            }); //for db context connection string
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
                 {
                     policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3000");
                 });
-            });
-            services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
+            }); //for api fetching from fe
+            services.AddMediatR(typeof(List.Handler).Assembly); //for Media pattern
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly); //for auto mapper object
 
             return services;
         }
