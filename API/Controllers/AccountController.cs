@@ -58,12 +58,20 @@ namespace API.Controllers
         {
             if (await _userManager.Users.AnyAsync(x => x.Email == registerDto.Email))
             {
-                return BadRequest("Email taken");
+                //ModelState.AddModelError("email", "Email taken");
+                //return BadRequest(ModelState);
+
+                //tra ve khong chi array of errors ma con may cai khac nua
+                //dang map ben fe la array errors chua cac error nen phai dung cach nay
+                //cach o tren tra thang luon 1 cai array nen se map sai
+                ModelState.AddModelError("email", "Email taken");
+                return ValidationProblem();
             }
 
             if (await _userManager.Users.AnyAsync(x => x.UserName == registerDto.Username))
             {
-                return BadRequest("Username taken");
+                ModelState.AddModelError("username", "Username taken");
+                return ValidationProblem();
             }
 
             var user = new AppUser
