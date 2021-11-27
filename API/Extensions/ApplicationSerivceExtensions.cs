@@ -33,6 +33,7 @@ namespace API.Extensions
             services.AddMediatR(typeof(List.Handler).Assembly); //for Media pattern
             services.AddAutoMapper(typeof(MappingProfiles).Assembly); //for auto mapper object
 
+
             return services;
         }
     }
