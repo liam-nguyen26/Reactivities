@@ -1,4 +1,4 @@
-﻿using Application.Core;
+﻿ using Application.Core;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Domain;
