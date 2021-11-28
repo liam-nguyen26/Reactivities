@@ -1,6 +1,7 @@
 ﻿using Application.Activities;
 using Application.Core;
-using AutoMapper;
+using Application.Interfaces;
+using Infrastructure.Security;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -19,10 +20,12 @@ namespace API.Extensions
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
             }); //for swagger
+
             services.AddDbContext<DataContext>(opt =>
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             }); //for db context connection string
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -33,7 +36,7 @@ namespace API.Extensions
             services.AddMediatR(typeof(List.Handler).Assembly); //for Media pattern
             services.AddAutoMapper(typeof(MappingProfiles).Assembly); //for auto mapper object
 
-
+            services.AddScoped<IUserAccessor, UserAccessor>();
             return services;
         }
     }
