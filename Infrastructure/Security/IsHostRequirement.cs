@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Infrastructure.Security
         //can check activity attendee id de xem no phai host cai activity nay ko
         //thay vi truyen tu ben controller qua nhung vi muon giu cho controller clean
         // nen la se lay trong http context gui toi 
-        public IsHostRequirementHanlder(DataContext dbContext, IHttpContextAccessor httpContextAccessor) 
+        public IsHostRequirementHanlder(DataContext dbContext, IHttpContextAccessor httpContextAccessor)
         {
             _dbcontext = dbContext;
             _httpContextAccessor = httpContextAccessor;
@@ -39,7 +40,10 @@ namespace Infrastructure.Security
             var activityId = Guid.Parse(_httpContextAccessor.HttpContext?.Request.RouteValues
                 .SingleOrDefault(x => x.Key == "id").Value?.ToString());
 
-            var attendee = _dbcontext.ActivityAttendees.FindAsync(userId, activityId).Result;
+            var attendee = _dbcontext.ActivityAttendees
+                .AsNoTracking()
+                .SingleOrDefaultAsync(x => x.AppUserId == userId && x.ActivityId == activityId)
+                .Result;
 
             if (attendee == null) return Task.CompletedTask;
 
